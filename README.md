@@ -147,15 +147,16 @@ produces the number of active users remaining in each cohort at each month of ob
 
 ## 📈 Google Sheets Analysis
 
-The SQL output was exported from DBeaver to CSV and used for further analysis in Google Sheets.
+The SQL output was exported from DBeaver to CSV and used for further cohort analysis in Google Sheets.
 
-The cohort table was used to calculate **Retention Rate** by comparing the number of active users in each month with the initial cohort size in Month 0.
+The spreadsheet contains:
 
-This makes it possible to compare retention dynamics across:
+- cohort tables;
+- Retention Rate calculations;
+- comparison of promotional and organic cohorts;
+- cohort retention patterns over time.
 
-- different registration cohorts;
-- promotional vs. organic acquisition;
-- different months after registration.
+👉 **[View the Google Sheets analysis](https://docs.google.com/spreadsheets/d/1khXNSDgdEahhdlEeSaQXxadpg3k9SHYOrlj908EhQLc/edit?gid=0#gid=0)**
 
 ---
 
