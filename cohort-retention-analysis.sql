@@ -1,20 +1,21 @@
 
 -- Отримання текстової дати без часу для users
 WITH users_step_1 AS (
-    select user_id,
+select 
+	user_id,
 	signup_datetime,
-		split_part (trim (signup_datetime), ' ', 1) as signup_date_without_time,
+	split_part (trim (signup_datetime), ' ', 1) as signup_date_without_time,
 	promo_signup_flag
-	from project.cohort_users_raw),
+from project.cohort_users_raw),
 
 -- Заміна розділювача / на -
 user_step_2 as (
-	select 
+select 
 	user_id,
 	signup_datetime,
 	replace (signup_date_without_time, '/', '-') as signup_date_without,
 	promo_signup_flag
-	FROM users_step_1),
+FROM users_step_1),
 		
 -- заміна розділювача . на -	
 user_step_3 as (
@@ -23,15 +24,16 @@ select
 	signup_datetime,
 	replace (signup_date_without, '.', '-') as signup_date_unified,
 	promo_signup_flag
-	FROM user_step_2),	
+FROM user_step_2),	
 	
 -- Визначення довжини року (year_len), формату року: YYYY або YY
 user_step_4 as (
-select user_id,
+select 
+	user_id,
 	signup_datetime,
 	promo_signup_flag,
-	 signup_date_unified,
-					length (split_part (signup_date_unified, '-',3)) as year_len
+	signup_date_unified,
+	length (split_part (signup_date_unified, '-',3)) as year_len
 FROM user_step_3),
 
 /* 	Перетворення текстової дати у тип date
@@ -44,32 +46,33 @@ select user_id,
 	promo_signup_flag,
 case 
 	when year_len = 4 then to_date (signup_date_unified,'dd-mm-yyyy')
-when year_len = 2 then to_date (signup_date_unified,'dd-mm-yy')
-end as signup_date_clear
+		when year_len = 2 then to_date (signup_date_unified,'dd-mm-yy')
+			end as signup_date_clear
 from user_step_4),
 
 -- покроковий CTE для events 
 
 events_step_1 AS (
-    select user_id,
-		event_type, 	
-		event_datetime,
-			split_part (trim (event_datetime), ' ', 1) as event_date_without_time
-	from project.cohort_events_raw),
+select 
+	user_id,
+	event_type, 	
+	event_datetime,
+	split_part (trim (event_datetime), ' ', 1) as event_date_without_time
+from project.cohort_events_raw),
 events_step_2 as (
-	select 
+select 
 	user_id,
 	event_type, 	
 	event_datetime,
 	replace (event_date_without_time, '/', '-') as event_date_without
-	FROM events_step_1),
+FROM events_step_1),
 events_step_3 as (
 select 
 	user_id,
 	event_type, 	
 	event_datetime,
 	replace (event_date_without, '.', '-') as event_date_unified
-	FROM events_step_2),
+FROM events_step_2),
 events_step_4  as (
 select 
 	user_id,
@@ -143,16 +146,16 @@ from  cohort_data),
 -- фільтрація where is not null  та активність 6 місяців 
 
 filtered_data as (
-	select 
+select 
 		user_id,
 		signup_date_clear,
 		event_date_clear,
-			(activity_year - cohort_year) * 12 + (activity_month_num - cohort_month_num) as month_offset,
+				(activity_year - cohort_year) * 12 + (activity_month_num - cohort_month_num) as month_offset,
 		promo_signup_flag,
 		event_type,
 		cohort_month
-	from month_offset
-	where	 
+from month_offset
+		where	 
 			signup_date_clear is not null 
 			and event_date_clear is not null 
 			and event_type is not null 
