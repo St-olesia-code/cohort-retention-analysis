@@ -110,7 +110,7 @@ The resulting `month_offset` represents the user's lifecycle stage:
 - `4` — fourth month after registration;
 - `5` — fifth month after registration.
 
-This allows user activity to be analyzed consistently across cohorts.
+The observation window is defined by `activity_month` and covers January–June 2025.
 
 ---
 
@@ -156,6 +156,8 @@ The spreadsheet contains:
 - comparison of promotional and organic cohorts;
 - cohort retention patterns over time.
 
+The analysis also includes an interactive slicer for filtering cohorts by acquisition type (`promo_signup_flag`).
+
 👉 **[View the Google Sheets analysis](https://docs.google.com/spreadsheets/d/1khXNSDgdEahhdlEeSaQXxadpg3k9SHYOrlj908EhQLc/edit?gid=0#gid=0)**
 
 ---
@@ -192,26 +194,20 @@ For example, the January 2025 promotional cohort retained:
 
 Across the observed cohorts, organic users generally demonstrate stronger retention than promotional users, especially in later months.
 
-This may indicate that organically acquired users have stronger long-term engagement, while promotional acquisition can generate users with lower subsequent retention.
+This suggests that organically acquired users demonstrate stronger long-term retention in the observed dataset, while promotional cohorts show a steeper decline in retention over time.
 
 ---
 
 ## 🛠️ Tools & Technologies
 
-- **PostgreSQL**
-- **SQL**
-- **DBeaver**
-- **Google Sheets**
-- **CTEs**
-- **JOINs**
-- **CASE expressions**
-- **DATE_TRUNC**
-- **EXTRACT**
-- **TO_DATE**
-- **String manipulation**
-- **COUNT DISTINCT**
-- **Cohort analysis**
-- **Retention analysis**
+- **Database:** PostgreSQL
+- **SQL Environment:** DBeaver
+- **Spreadsheet Analysis:** Google Sheets
+- **SQL Techniques:** CTEs, JOINs, CASE expressions
+- **Date & Time Functions:** `DATE_TRUNC`, `EXTRACT`, `TO_DATE`
+- **String Functions:** `TRIM`, `SPLIT_PART`, `REPLACE`, `LENGTH`
+- **Aggregation:** `COUNT(DISTINCT)`
+- **Analytical Methods:** Cohort Analysis, Retention Analysis
 
 ---
 
@@ -221,8 +217,7 @@ The repository contains:
 
 - `cohort-retention-analysis.sql` — SQL data preparation, transformation, cohort definition, and aggregation;
 - `cohort_analysis.csv` — final analytical dataset exported from DBeaver;
-- Google Sheets analysis — cohort tables, retention calculations, and comparison of promotional vs. organic cohorts.
-
+- [Google Sheets analysis](https://docs.google.com/spreadsheets/d/1khXNSDgdEahhdlEeSaQXxadpg3k9SHYOrlj908EhQLc/edit?gid=0#gid=0) — cohort tables, Retention Rate calculations, slicer, and comparison of promotional vs. organic cohorts.
 ---
 
 ## 🎯 Project Outcome
